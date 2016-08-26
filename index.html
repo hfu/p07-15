@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>p07-15 with Mapbox GL JS</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.18.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.18.0/mapbox-gl.css' rel='stylesheet' />
+<link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+<style>
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGZ1IiwiYSI6ImlRSGJVUTAifQ.rTx380smyvPc1gUfZv1cmw';
+base = document.location.href.replace('index.html', '').replace(document.location.hash, '');
+map = new mapboxgl.Map({
+  container: 'map', style: 'mapbox://styles/mapbox/dark-v9',
+  center: [140.234, 35.708], zoom: 6, hash: true, maxZoom: 30
+});
+map.on('load', function () {
+  map.addSource('p07-15', {
+    tiles: [base + 'p07-15/{z}/{x}/{y}.pbf'],
+    type: 'vector', maxzoom: 14
+  });
+  map.addLayer({
+    'id': 'pt',
+    'type': 'circle',
+    'source': 'p07-15',
+    'source-layer': 'p07-15',
+    'paint': {
+      'circle-color': '#ff0000',
+      'circle-radius': 1
+    }
+  });
+});
+</script>
+</body>
+</html>
